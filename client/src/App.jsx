@@ -4,7 +4,7 @@ function App() {
   
 
   return (
-    <div>
+    <div className="btn btn-primary">
       test
     </div>
   )
