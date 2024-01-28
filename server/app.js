@@ -1,8 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./routes/roomsRoutes');
+const cors = require('cors');
 
 const app = express();
+
+app.use(cors());
 
 const dbUrl = 'mongodb+srv://Mubarak:MuBaRak1@cluster0.kcl5drf.mongodb.net/mRooms';
 
