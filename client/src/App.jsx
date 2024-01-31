@@ -13,7 +13,7 @@ function App() {
         <Navbar />
         <Routes>
           <Route path="/home" element={<Homescreen />} />
-          <Route path="/:id" element={<Bookingscreen />} />
+          <Route path="/rooms/:id" element={<Bookingscreen />} />
         </Routes>
       </div>
     </BrowserRouter>
