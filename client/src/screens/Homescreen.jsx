@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import Room from '../components/room'
+import Loader from '../components/loader'
+import Error from '../components/Error'
 
 function Homescreen() {
   const [rooms, setRooms] = useState([])
@@ -29,16 +31,15 @@ function Homescreen() {
     <div className='container'>
       <div className='row justify-content-center mt-5'>
         {loading ? (
-          <h1>Loading...</h1>
-        ) : error ? (
-          <h1>Ooops.. Somethig went wrog.</h1>
-        ) : (
+          <Loader />
+        ) : rooms.length > 1 ? (
           rooms.map((room) => {
             return <div className='col-md-9 mt-2'>
                 <Room room={room}/>
             </div>
           })
-        )}
+        ) : <Error /> 
+        }
       </div>
     </div>
   )

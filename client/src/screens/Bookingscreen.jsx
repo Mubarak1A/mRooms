@@ -1,6 +1,8 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+import Loader from '../components/loader'
+import Error from '../components/Error'
 
 function Bookingscreen() {
   const [rooms, setRooms] = useState([])
@@ -16,7 +18,7 @@ function Bookingscreen() {
         return response.json();
       }).then((data) => {
         setLoading(false);
-        //console.log(data)
+        console.log(data)
         setRooms(data);
       })
       .catch((err) => {
@@ -30,10 +32,9 @@ function Bookingscreen() {
     <div className='container'>
       <div className='row justify-content-center mt-5'>
         {loading ? (
-          <h1>Loading...</h1>
-        ) : error ? (
-          <h1>Ooops.. Somethig went wrog.</h1>
-        ) : ( <div className='row bs'>
+          <Loader />
+        ) : rooms? ( 
+              <div className='row bs'>
                 <div className="col-md-6">
                     <h1>{rooms.name}</h1>
                     <img src={rooms.imageurls[0]} className='big-img' />
@@ -64,7 +65,7 @@ function Bookingscreen() {
                     </div>
                 </div>
             </div>
-          )
+          ) : <Error />
         }
       </div>
     </div>
