@@ -38,7 +38,7 @@ function Homescreen() {
                 <Room room={room}/>
             </div>
           })
-        ) : <Error /> 
+        ) : <Error message={"Ooops... Something Went wrong! Please try again."}/> 
         }
       </div>
     </div>

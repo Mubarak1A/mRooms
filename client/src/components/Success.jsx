@@ -1,10 +1,10 @@
 import React from 'react'
 
-export default function Success() {
+export default function Success({message}) {
   return (
     <div>
         <div class="alert alert-success" role="alert">
-            Registration Successful!
+            {message}
         </div>
     </div>
   )

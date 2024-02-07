@@ -65,7 +65,7 @@ function Bookingscreen() {
                     </div>
                 </div>
             </div>
-          ) : <Error />
+          ) : <Error message={"Ooops... Something Went wrong! Please try again."}/>
         }
       </div>
     </div>
