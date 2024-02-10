@@ -7,7 +7,6 @@ const cors = require('cors');
 const app = express();
 
 app.use(cors());
-app.use(express.urlencoded({extended: true}))
 
 const dbUrl = 'mongodb+srv://Mubarak:MuBaRak1@cluster0.kcl5drf.mongodb.net/mRooms';
 

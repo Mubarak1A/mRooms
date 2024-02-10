@@ -16,21 +16,14 @@ export default function Registerscreen() {
 
     const handleSubmit = () => {
         if(password === cpassword) {
-            const user = {
-                name,
-                email,
-                password,
-                cpassword
-            }
+            const user = { name, email, password }
             
             const url = "http://localhost:8080/api/register"
             setLoading(true)
             fetch(url, {
                 method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                body: user
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(user)
             })
                 .then((response) => {
                     if (!response.ok) {
@@ -38,12 +31,13 @@ export default function Registerscreen() {
                         throw new Error('Network response was not ok');
                       }
                       setLoading(false)
-                      return response.json();
+                      setSucces(true)
+                      console.log("Success")
                 })
                 .catch((err) => {
                     console.log(err)
-                    //setLoading(false)
-                    //setError(true)
+                    setLoading(false)
+                    setError(true)
                 })
         }
         else {
@@ -53,12 +47,12 @@ export default function Registerscreen() {
 
   return (
     <div>
-        {error && <Error message={"Ooops... Something Went wrong! Please try again."}/>}
         <div className='row justify-content-center mt-5'>
             <div className='col-md-5 auth-box'>
-                {success && <Success message={"Registration Success!"}/>}
+                {error && <Error message={"Ooops... Something Went wrong! Please try again."}/>}
+                {success && <Success message={"Registration Successful!"}/>}
                 <div className='bs text-center'>
-                    <h1>Resgister</h1>
+                    <h1>Register</h1>
                     <input type='text' className='form-control' id='name' placeholder='Full Name' value={name} onChange={(e) => setName(e.target.value)}/><br />
                     <input type='email' className='form-control' id='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/><br />
                     <input type='password' className='form-control' id='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/><br />

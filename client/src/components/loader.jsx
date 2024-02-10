@@ -7,8 +7,8 @@ export default function Loader() {
     let [color, setColor] = useState("#0000ff");
 
     return (
-        <div style={{marginTop:"200px"}}>
-            <div className="sweet-loading" style={{display:"flex", justifyContent:"center"}}>
+        <div className="sweet-loading" style={{display:"flex", justifyContent:"center", margin:"20px"}}>
+            <div>
                 <BarLoader
                 color={color}
                 loading={loading}

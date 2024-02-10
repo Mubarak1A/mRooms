@@ -1,23 +1,43 @@
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+    const user = JSON.parse(localStorage.getItem("currentuser"));
+    const logout = () => {
+        localStorage.removeItem("currentuser")
+        user = None
+    }
+
+    //console.log(user)
+
     return (
-        <nav class="navbar navbar-expand-lg">
-            <Link class="navbar-brand" to="/">mRooms</Link>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+        <nav className="navbar navbar-expand-lg">
+            <Link className="navbar-brand" to="/">mRooms</Link>
+            <button className="navbar-toggler" style={{color:"white"}} type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span className="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <Link class="nav-link" to="/register">Register</Link>
+            <div className="collapse navbar-collapse" id="navbarNav">
+                <ul className="navbar-nav">
+                    {user ? (<>
+                        <div class="dropdown mr-3">
+                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                <i className="fa fa-user mr-2"></i>{user.name}
+                            </button>
+                            <div class="dropdown-menu ">
+                                <a class="dropdown-item" href="#">Bookings</a>
+                                <Link class="dropdown-item" to="/login" onClick={logout}>Logout</Link>
+                            </div>
+                        </div>
+                </>) : <>
+                    <li className="nav-item active">
+                        <Link className="nav-link" to="/register">Register</Link>
                     </li>
-                    <li class="nav-item">
-                        <Link class="nav-link" to="/login">Login</Link>
+                    <li className="nav-item">
+                        <Link className="nav-link" to="/login">Login</Link>
                     </li>
-                </ul>
-            </div>
-        </nav>
+                </>}
+            </ul>
+        </div>
+        </nav >
     )
 }
 

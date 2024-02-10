@@ -12,12 +12,16 @@ body{
     background-color: blue !important;
 }
 
-.navbar a {
+.nav-link, .navbar-brand {
     color: white !important;
 }
 
 .navbar-nav {
     margin-left: auto;
+}
+
+.dropdown-toggle {
+    border: 0px solid white !important;
 }
 
 .small-img{
@@ -45,5 +49,5 @@ h1{
 }
 
 .auth-box{
-    width: 60%;
+    max-width: 60%;
 }

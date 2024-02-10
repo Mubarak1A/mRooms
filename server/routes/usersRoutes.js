@@ -2,6 +2,8 @@ const express = require("express");
 const router = express.Router()
 const User = require("../Models/userModels");
 
+router.use(express.json());
+
 router.post("/register", (req, res) => {
     const newuser = new User(req.body)
     
@@ -14,17 +16,13 @@ router.post("/register", (req, res) => {
         })
 })
 
-router.post("/login", async(req, res) => {
+router.post("/login", (req, res) => {
     const {email, password} = req.body
 
     User.findOne({email : email, password : password})
         .then((user) => {
-            if(user) {
-                res.send(user);
-            }
-            else {
-                res.status(400).json({message : "Invalid Credentials"})
-            }
+            console.log(user)
+            res.send(user)
         })
         .catch((err) => {
             return res.status(400).json({err})
