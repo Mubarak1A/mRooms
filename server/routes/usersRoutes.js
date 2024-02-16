@@ -21,7 +21,7 @@ router.post("/login", (req, res) => {
 
     User.findOne({email : email, password : password})
         .then((user) => {
-            console.log(user)
+            //console.log(user)
             res.send(user)
         })
         .catch((err) => {

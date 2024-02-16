@@ -3,12 +3,25 @@ import { useState, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import Loader from '../components/loader'
 import Error from '../components/Error'
+import moment from 'moment'
 
 function Bookingscreen() {
   const [rooms, setRooms] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(false)
-  const { id } = useParams();
+  const { id, fromDate, toDate } = useParams();
+  //const {totalDays, setTotalDays} = useState();
+
+  const FromDate = moment(fromDate, 'DD-MM-YYYY');
+  const ToDate = moment(toDate, 'DD-MM-YYYY');
+
+  const dateDifference = ToDate.diff(FromDate, 'days') + 1;
+
+  const totalAmount = dateDifference * rooms.rentperday
+
+  const user = JSON.parse(localStorage.getItem('currentuser'))
+
+  
 
   const url = `http://localhost:8080/api/rooms/${id}`
 
@@ -44,10 +57,10 @@ function Bookingscreen() {
                       <h1>Booking Details</h1>
                       <hr />
                       <b>
-                        <p>Name : </p>
-                        <p>From Date : </p>
-                        <p>To Date : </p>
-                        <p>Max Count : {rooms.maxcount}</p>
+                        <p>Name : {user.name} </p>
+                        <p>From Date :  {fromDate} </p>
+                        <p>To Date : {toDate} </p>
+                        <p>Max Count : {rooms.maxcount} </p>
                       </b>
                     </div>
 
@@ -55,9 +68,9 @@ function Bookingscreen() {
                       <h1>Amount</h1>
                       <hr />
                       <b>
-                        <p>Total days : </p>
+                        <p>Total days : {dateDifference} </p>
                         <p>Rent per day : {rooms.rentperday}</p>
-                        <p>Total Amount : </p>
+                        <p>Total Amount : {totalAmount} </p>
                       </b>
                     </div>
                     <div style={{float: 'right'}}>
