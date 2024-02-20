@@ -1,7 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const roomsRouter = require('./routes/roomsRoutes');
-const usersRouter = require('./routes/usersRoutes');
+const roomsRoute = require('./routes/roomsRoutes');
+const usersRoute = require('./routes/usersRoutes');
+const bookingsRoute = require('./routes/bookingsRoutes');
 const cors = require('cors');
 
 const app = express();
@@ -20,5 +21,6 @@ mongoose.connect(dbUrl)
     .catch((err) => console.log(err));
 
 
-app.use('/api', roomsRouter)
-app.use('/api', usersRouter)
+app.use('/api', roomsRoute)
+app.use('/api', usersRoute)
+app.use('/api', bookingsRoute)

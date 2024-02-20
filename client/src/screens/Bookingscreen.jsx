@@ -17,21 +17,40 @@ function Bookingscreen() {
 
   const dateDifference = ToDate.diff(FromDate, 'days') + 1;
 
-  const totalAmount = dateDifference * rooms.rentperday
+  const [ totalAmount, setTotalAmount ] = useState();
 
   const user = JSON.parse(localStorage.getItem('currentuser'))
 
+  const bookRoom = () => {
+    const bookingDetails = {
+      room : rooms,
+      userid : JSON.parse(localStorage.getItem('currentuser'))._id,
+      fromDate,
+      toDate,
+      totalAmount,
+      totalDays : dateDifference
+    }
+
+    const bookingUrl = 'http://localhost:8080/api/bookroom'
+    fetch(bookingUrl, {
+      method : 'POST',
+      headers : {'Content-Type' : 'application/json'},
+      body : JSON.stringify(bookingDetails)
+    })
+  }
+
   
 
-  const url = `http://localhost:8080/api/rooms/${id}`
+  const roomUrl = `http://localhost:8080/api/rooms/${id}`
 
   useEffect(() => {
-    fetch(url)
+    fetch(roomUrl)
       .then((response) => {
         return response.json();
       }).then((data) => {
+        setTotalAmount(dateDifference * data.rentperday);
         setLoading(false);
-        console.log(data)
+        //console.log(data)
         setRooms(data);
       })
       .catch((err) => {
@@ -74,7 +93,7 @@ function Bookingscreen() {
                       </b>
                     </div>
                     <div style={{float: 'right'}}>
-                      <button className='btn btn-primary'>Pay Now</button>    
+                      <button className='btn btn-primary' onClick={bookRoom}>Pay Now</button>    
                     </div>
                 </div>
             </div>
