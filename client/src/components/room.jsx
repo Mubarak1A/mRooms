@@ -21,9 +21,11 @@ const Room = ({room, fromDate, toDate}) => {
                     <p><b>Type:</b> {room.type}</p>
 
                     <div style={{float:'right'}}>
-                        <Link to={`/rooms/${room._id}/${fromDate}/${toDate}`}>
-                            <button className='btn btn-primary mr-3'>Book Now</button>
-                        </Link>
+                        {(fromDate && toDate) && (
+                            <Link to={`/rooms/${room._id}/${fromDate}/${toDate}`}>
+                                <button className='btn btn-primary mr-3'>Book Now</button>
+                            </Link>
+                        )}
                         <button className="btn btn-primary" onClick={handleShow}>View Details</button>
                     </div>
 

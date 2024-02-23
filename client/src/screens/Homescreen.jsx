@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Room from '../components/room'
 import Loader from '../components/loader'
 import Error from '../components/Error'
-import { DatePicker, Space } from 'antd'
+import { DatePicker } from 'antd'
 import moment from 'moment'
 
 function Homescreen() {
@@ -14,8 +14,9 @@ function Homescreen() {
   const [toDate, setToDate] = useState()
   const { RangePicker } = DatePicker;
 
+  const [duplicateRooms, setDuplicateRooms] = useState([])
+  
   const url = 'http://localhost:8080/api/rooms'
-
   useEffect(() => {
     fetch(url)
       .then((response) => {
@@ -24,6 +25,7 @@ function Homescreen() {
         setLoading(false);
         //console.log(data)
         setRooms(data);
+        setDuplicateRooms(data)
       })
       .catch((err) => {
         console.log(err)
@@ -33,13 +35,29 @@ function Homescreen() {
   }, [])
 
   const filterByDate = (dates) => {
-    const formatedFromDate = dates[0].format('DD-MM-YYYY');
-    const formatedToDate = dates[1].format('DD-MM-YYYY');
+    const formattedFromDate = dates[0].format("DD-MM-YYYY");
+    const formattedToDate = dates[1].format("DD-MM-YYYY");
 
-    //console.log('Selected Date Range:', formattedStartDate, 'to', formattedEndDate);
-    setFromDate(formatedFromDate);
-    setToDate(formatedToDate);
-  }
+    setFromDate(formattedFromDate);
+    setToDate(formattedToDate);
+
+    const tempRooms = duplicateRooms.filter((room) => {
+        if (room.currentbookings.length === 0) {
+            return true; // Room has no bookings, include it
+        }
+
+        // Check if there is any overlapping booking for the selected date range
+        return room.currentbookings.every((booking) => {
+            return (
+                moment(formattedToDate, "DD-MM-YYYY").isBefore(booking.fromDate) ||
+                moment(formattedFromDate, "DD-MM-YYYY").isAfter(booking.toDate)
+            );
+        });
+    });
+
+    setRooms(tempRooms);
+};
+
 
   return (
     <div className='container'>
