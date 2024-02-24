@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-    const user = JSON.parse(localStorage.getItem("currentuser"));
+    let user = JSON.parse(localStorage.getItem("currentuser"));
     const logout = () => {
         localStorage.removeItem("currentuser")
         user = None

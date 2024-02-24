@@ -24,7 +24,7 @@ function Bookingscreen() {
 
   const onToken = (token) => {
     console.log(token);
-    const bookingDetails = {
+    /*const bookingDetails = {
       room: rooms,
       userid: JSON.parse(localStorage.getItem("currentuser"))._id,
       fromDate,
@@ -39,7 +39,7 @@ function Bookingscreen() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(bookingDetails),
-    });
+    });*/
   };
 
   const roomUrl = `http://localhost:8080/api/rooms/${id}`;
@@ -97,7 +97,7 @@ function Bookingscreen() {
               <div style={{ float: "right" }}>
                 <StripeCheckout
                   amount={totalAmount * 100}
-                  currency="$"
+                  currency="USD"
                   token={onToken}
                   stripeKey="pk_test_51OmfrQHLqMV9clnF4KIjmZlLkFoV6YsrksATWOeLuBBemAjdbeU9Lv7mqdjUQgxCu8pcnnI0WsR0VHUdiUXIElwF007PTISRL6"
                 >
