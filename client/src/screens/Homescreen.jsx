@@ -67,8 +67,15 @@ function Homescreen() {
   }
 
   const filterByType = (e) => {
-    const tempRooms = duplicateRooms.filter(room => room.type.toLowerCase()===e.toLowerCase())
-    setRooms(tempRooms)
+    if (e !== 'all') {
+      setType(e)
+      const tempRooms = duplicateRooms.filter(room => room.type.toLowerCase() === e.toLowerCase())
+      setRooms(tempRooms)
+    }
+    else {
+      setType('All')
+      setRooms(duplicateRooms)
+    }
   }
 
 
@@ -77,16 +84,16 @@ function Homescreen() {
     <div className='container'>
       <div className="row mt-5 bs">
         <div className="col-md-3">
-          <RangePicker format='DD-MM-YYYY' onChange={filterByDate} className='filter'/>
+          <RangePicker format='DD-MM-YYYY' onChange={filterByDate} className='filter' />
         </div>
 
         <div className="col-md-3 search">
           <input type='text' className='form-control filter' placeholder='search room'
-            value={searchKey} onChange={(e) => {setSearchKey(e.target.value)}} onKeyUp={filterBysearch} />
+            value={searchKey} onChange={(e) => { setSearchKey(e.target.value) }} onKeyUp={filterBysearch} />
         </div>
 
         <div className="col-md-3">
-          <select className='form-control filter' value={type} onChange={(e) => {filterByType(e.target.value)}}>
+          <select className='form-control filter' value={type} onChange={(e) => { filterByType(e.target.value) }}>
             <option value="all">All</option>
             <option value="delux">Delux</option>
             <option value="non-delux">Non-Delux</option>
