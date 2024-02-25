@@ -5,6 +5,7 @@ import Loader from "../components/loader";
 import Error from "../components/Error";
 import moment from "moment";
 import StripeCheckout from "react-stripe-checkout";
+import swal from 'sweetalert2';
 
 function Bookingscreen() {
   const [rooms, setRooms] = useState([]);
@@ -23,7 +24,7 @@ function Bookingscreen() {
   const user = JSON.parse(localStorage.getItem("currentuser"));
 
   const onToken = (token) => {
-    console.log(token);
+    //console.log(token);
     const bookingDetails = {
       room: rooms,
       userid: JSON.parse(localStorage.getItem("currentuser"))._id,
@@ -34,12 +35,25 @@ function Bookingscreen() {
       token
     };
 
+    setLoading(true)
     const bookingUrl = "http://localhost:8080/api/bookroom";
     fetch(bookingUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(bookingDetails),
-    });
+    })
+    .then((res) => {
+      setLoading(false);
+      swal('Congratulations', 'Your Room is Booked Successfully', 'success')
+      .then((result) => {
+        window.location.href='/bookings'
+      })
+    })
+    .catch((err) => {
+      setLoading(false)
+      swal('Oooops', 'Something went wrong', 'error')
+      console.log(err)
+    })
   };
 
   const roomUrl = `http://localhost:8080/api/rooms/${id}`;

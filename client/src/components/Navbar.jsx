@@ -23,7 +23,7 @@ const Navbar = () => {
                                 <i className="fa fa-user mr-2"></i>{user.name}
                             </button>
                             <div class="dropdown-menu ">
-                                <a class="dropdown-item" href="#">Bookings</a>
+                                <Link class="dropdown-item" to="/bookings">Bookings</Link>
                                 <Link class="dropdown-item" to="/login" onClick={logout}>Logout</Link>
                             </div>
                         </div>

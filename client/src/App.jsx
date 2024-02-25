@@ -18,6 +18,7 @@ function App() {
           <Route path="/rooms/:id/:fromDate/:toDate" element={<Bookingscreen />} />
           <Route path='/register' element={<Registerscreen />} />
           <Route path='/login' element={<Loginscreen />} />
+          <Route path='/bokings'/>
         </Routes>
       </div>
     </BrowserRouter>
