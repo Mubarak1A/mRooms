@@ -15,7 +15,10 @@ function Homescreen() {
   const { RangePicker } = DatePicker;
 
   const [duplicateRooms, setDuplicateRooms] = useState([])
-  
+
+  const [searchKey, setSearchKey] = useState("")
+  const [type, setType] = useState("")
+
   const url = 'http://localhost:8080/api/rooms'
   useEffect(() => {
     fetch(url)
@@ -42,41 +45,66 @@ function Homescreen() {
     setToDate(formattedToDate);
 
     const tempRooms = duplicateRooms.filter((room) => {
-        if (room.currentbookings.length === 0) {
-            return true; // Room has no bookings, include it
-        }
+      if (room.currentbookings.length === 0) {
+        return true; // Room has no bookings, include it
+      }
 
-        // Check if there is any overlapping booking for the selected date range
-        return room.currentbookings.every((booking) => {
-            return (
-                moment(formattedToDate, "DD-MM-YYYY").isBefore(booking.fromDate) ||
-                moment(formattedFromDate, "DD-MM-YYYY").isAfter(booking.toDate)
-            );
-        });
+      // Check if there is any overlapping booking for the selected date range
+      return room.currentbookings.every((booking) => {
+        return (
+          moment(formattedToDate, "DD-MM-YYYY").isBefore(booking.fromDate) ||
+          moment(formattedFromDate, "DD-MM-YYYY").isAfter(booking.toDate)
+        );
+      });
     });
 
     setRooms(tempRooms);
-};
+  };
+
+  const filterBysearch = () => {
+    const tempRooms = duplicateRooms.filter(room => room.name.toLowerCase().includes(searchKey.toLowerCase()))
+    setRooms(tempRooms)
+  }
+
+  const filterByType = (e) => {
+    const tempRooms = duplicateRooms.filter(room => room.type.toLowerCase()===e.toLowerCase())
+    setRooms(tempRooms)
+  }
+
 
 
   return (
     <div className='container'>
-      <div className="row mt-5">
+      <div className="row mt-5 bs">
         <div className="col-md-3">
-          <RangePicker format='DD-MM-YYYY' onChange={filterByDate}/>
+          <RangePicker format='DD-MM-YYYY' onChange={filterByDate} className='filter'/>
         </div>
+
+        <div className="col-md-3 search">
+          <input type='text' className='form-control filter' placeholder='search room'
+            value={searchKey} onChange={(e) => {setSearchKey(e.target.value)}} onKeyUp={filterBysearch} />
+        </div>
+
+        <div className="col-md-3">
+          <select className='form-control filter' value={type} onChange={(e) => {filterByType(e.target.value)}}>
+            <option value="all">All</option>
+            <option value="delux">Delux</option>
+            <option value="non-delux">Non-Delux</option>
+          </select>
+        </div>
+
+
       </div>
 
       <div className='row justify-content-center mt-5'>
         {loading ? (
           <Loader />
-        ) : rooms.length > 1 ? (
+        ) : (
           rooms.map((room) => {
             return <div className='col-md-9 mt-2'>
-                <Room room={room} fromDate={fromDate} toDate={toDate}/>
+              <Room room={room} fromDate={fromDate} toDate={toDate} />
             </div>
-          })
-        ) : <Error message={"Ooops... Something Went wrong! Please try again."}/> 
+          }))
         }
       </div>
     </div>
