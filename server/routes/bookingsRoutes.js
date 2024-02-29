@@ -61,6 +61,7 @@ router.post('/bookroom', (req, res) => {
                             fromdate: fromDate,
                             todate: toDate,
                             userid: userid,
+                            totalAmount,
                             status: newBooking.status
                         }
                     }
@@ -75,5 +76,46 @@ router.post('/bookroom', (req, res) => {
             res.status(400).json({ err: err.message });
         });
 });
+
+router.post('/getbookingsbyid', (req, res) => {
+    const userid = req.body.userid
+
+    bookings.find({ userid : userid })
+        .then((bookings) => {
+            res.send(bookings)
+        })
+        .catch((err) => {
+            res.status(400).json({ err })
+        })
+})
+
+router.post('/bookings/cancelbooking', (res, req) => {
+    const {bookingid, roomid} = req.body
+
+    bookings.findOne({_id : bookingid})
+    .then((booking) => {
+        booking.status = 'cancelled'
+    })
+    .then((booking) => {
+        booking.save()
+    })
+    .then((booking) => {
+        Room.findOne({_id : roomid})
+    })
+    .then((room) => {
+        const bookings = room.currentbookings;
+        const temp = bookings.filter(booking => {booking.bookingid.tostring() !== bookingid})
+        room.currentbookings = temp
+    })
+    .then((room) => {
+        room.save()
+    })
+    .then((room) => {
+        res.send('Booking Cancelledd Successfully')
+    })
+    .catch((err) => {
+        res.status(400).json({err})
+    })
+})
 
 module.exports = router;

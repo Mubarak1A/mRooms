@@ -46,7 +46,7 @@ function Bookingscreen() {
       setLoading(false);
       swal('Congratulations', 'Your Room is Booked Successfully', 'success')
       .then((result) => {
-        window.location.href='/bookings'
+        window.location.href='/home'
       })
     })
     .catch((err) => {

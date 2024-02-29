@@ -5,6 +5,7 @@ import Bookingscreen from './screens/Bookingscreen'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Registerscreen from './screens/Registerscreen'
 import Loginscreen from './screens/Loginscreen'
+import ProfileScreen from './screens/ProfileScreen'
 
 function App() {
   
@@ -18,7 +19,7 @@ function App() {
           <Route path="/rooms/:id/:fromDate/:toDate" element={<Bookingscreen />} />
           <Route path='/register' element={<Registerscreen />} />
           <Route path='/login' element={<Loginscreen />} />
-          <Route path='/bokings'/>
+          <Route path='/profile' element={<ProfileScreen />} />
         </Routes>
       </div>
     </BrowserRouter>

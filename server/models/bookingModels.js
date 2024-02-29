@@ -16,10 +16,10 @@ const bookingSchema = mongoose.Schema({
     todate : {
         type : String, require : true
     },
-    toamount : {
+    totalamount : {
         type : Number, require : true
     },
-    todays : {
+    totaldays : {
         type : Number, require : true
     },
     transactionid : {

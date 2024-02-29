@@ -26,7 +26,7 @@ export default function Loginscreen() {
         .then((response) => {
             setLoading(false);
             if (!response.ok) {
-                //console.log('Network response was not ok');
+                console.log('Network response was not ok');
             }
             return response.json();
         })
