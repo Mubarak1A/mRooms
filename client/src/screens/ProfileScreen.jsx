@@ -72,7 +72,7 @@ export function Bookings() {
         fetch('http://localhost:8080/api/bookings/cancelbooking', {
             method : 'POST',
             headers : {'Content-Type' : 'application/json'},
-            body : {bookingid, roomid}
+            body : JSON.stringify({bookingid, roomid})
         })
         .then((res) => {
             console.log(res)
@@ -97,10 +97,10 @@ export function Bookings() {
                                 <h5><strong>Bookingid:</strong>   {booking._id}</h5>
                                 <h5><strong>ChechIn:</strong>   {booking.fromdate}</h5>
                                 <h5><strong>CheckOut:</strong>   {booking.todate}</h5>
-                                <h5><strong>Amount:</strong>   {booking.totalamount}</h5>
+                                <h5><strong>Amount:</strong>   ${booking.totalamount}</h5>
                                 <h5><strong>Status:</strong>   {booking.status === 'booked' ? 'CONFIRMED' : 'CANCELED'}</h5>
                             
-                                <div className='text-rignt'>
+                                <div className='text-right'>
                                     <button className='btn btn-primary' onClick={() => {cancelBooking(booking._id, booking.roomid)} }>CANCEL BOOKING</button>
                                 </div>
                             </div>

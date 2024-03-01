@@ -10,73 +10,59 @@ router.use(express.json());
 
 router.post('/bookroom', (req, res) => {
     const {
-        room,
-        userid,
-        fromDate,
-        toDate,
-        totalAmount,
-        totalDays,
-        token
+      room,
+      userid,
+      fromDate,
+      toDate,
+      totalAmount,
+      totalDays,
+      token
     } = req.body;
-
+  
     let newBooking;
-
-    const customer = stripe.customers.create({
-        email: token.email,
-        source: token.id
+  
+    stripe.customers.create({
+      email: token.email,
+      source: token.id
     })
-        .then((customer) => {
-            const payment = stripe.charges.create(
-                {
-                    amount: totalAmount * 100,
-                    customer: customer.id,
-                    currency: 'USD',
-                    receipt_email: token.mail
-                }, {
-                idempotencyKey: uuidv4()
-            }
-            )
-        })
-        .then(() => {
-            bookings.create({
-                room: room.name,
-                roomid: room._id,
-                userid,
-                fromdate: fromDate,
-                todate: toDate,
-                totalamount: totalAmount,
-                totaldays: totalDays,
-                transactionid: '1234'
-            })
-        })
-        .then((bookedRoom) => {
-            newBooking = bookedRoom;
-
-            return Room.findOneAndUpdate(
-                { _id: newBooking.roomid },
-                {
-                    $push: {
-                        currentbookings: {
-                            bookingid: newBooking._id,
-                            fromdate: fromDate,
-                            todate: toDate,
-                            userid: userid,
-                            totalAmount,
-                            status: newBooking.status
-                        }
-                    }
-                },
-                { new: true }
-            );
-        })
-        .then((updatedRoom) => {
-            res.send('Booking Successful!');
-        })
-        .catch((err) => {
-            res.status(400).json({ err: err.message });
+      .then((customer) => {
+        return stripe.charges.create({
+          amount: totalAmount * 100,
+          customer: customer.id,
+          currency: 'USD',
+          receipt_email: token.email
+        }, {
+          idempotencyKey: uuidv4()
         });
-});
-
+      })
+      .then(() => {
+        return bookings.create({
+          room: room.name,
+          roomid: room._id,
+          userid,
+          fromdate: fromDate,
+          todate: toDate,
+          totalamount: totalAmount,
+          totaldays: totalDays,
+          transactionid: '1234'
+        });
+      })
+      .then((bookedRoom) => {
+        newBooking = bookedRoom;
+        return Room.findOneAndUpdate(
+          { _id: newBooking.roomid },
+          { $push: { currentbookings: newBooking } },
+          { new: true }
+        );
+      })
+      .then((updatedRoom) => {
+        res.send('Booking Successful!');
+      })
+      .catch((err) => {
+        res.status(400).json({ err: err.message });
+      });
+  });
+  
 router.post('/getbookingsbyid', (req, res) => {
     const userid = req.body.userid
 
