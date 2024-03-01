@@ -3,6 +3,7 @@ import { Tabs } from 'antd';
 import TabPane from 'antd/es/tabs/TabPane';
 import Loader from '../components/loader'
 import Error from '../components/Error'
+import { Tag } from 'antd';
 
 function ProfileScreen() {
     const user = JSON.parse(localStorage.getItem('currentuser'))
@@ -75,8 +76,9 @@ export function Bookings() {
             body : JSON.stringify({bookingid, roomid})
         })
         .then((res) => {
-            console.log(res)
+            //console.log(res)
             setLoading(false)
+            window.location.reload()
         })
         .catch((err) => {
             setLoading(false)
@@ -95,13 +97,13 @@ export function Bookings() {
                             <div className='bs'>
                                 <h2>{booking.room}</h2>
                                 <h5><strong>Bookingid:</strong>   {booking._id}</h5>
-                                <h5><strong>ChechIn:</strong>   {booking.fromdate}</h5>
+                                <h5><strong>ChecKIn:</strong>   {booking.fromdate}</h5>
                                 <h5><strong>CheckOut:</strong>   {booking.todate}</h5>
                                 <h5><strong>Amount:</strong>   ${booking.totalamount}</h5>
-                                <h5><strong>Status:</strong>   {booking.status === 'booked' ? 'CONFIRMED' : 'CANCELED'}</h5>
+                                <h5><strong>Status:</strong>   {booking.status === 'booked' ? (<Tag color="green">CONFIRMED</Tag>) : (<Tag color="red">CANCELLED</Tag>)}</h5>
                             
                                 <div className='text-right'>
-                                    <button className='btn btn-primary' onClick={() => {cancelBooking(booking._id, booking.roomid)} }>CANCEL BOOKING</button>
+                                    {(booking.status !== 'cancelled') && <button className='btn btn-primary' onClick={() => {cancelBooking(booking._id, booking.roomid)} }>CANCEL BOOKING</button>}
                                 </div>
                             </div>
                         )

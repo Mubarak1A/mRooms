@@ -5,7 +5,7 @@ import Loader from "../components/loader";
 import Error from "../components/Error";
 import moment from "moment";
 import StripeCheckout from "react-stripe-checkout";
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 
 function Bookingscreen() {
   const [rooms, setRooms] = useState([]);
@@ -43,15 +43,20 @@ function Bookingscreen() {
       body: JSON.stringify(bookingDetails),
     })
     .then((res) => {
-      setLoading(false);
-      swal('Congratulations', 'Your Room is Booked Successfully', 'success')
+      setLoading(false)
+      window.location.href='/home'
+      /*Swal({
+        title: "Good job!",
+        text: "You clicked the button!",
+        icon: "success"
+      })
       .then((result) => {
         window.location.href='/home'
-      })
+      })*/
     })
     .catch((err) => {
       setLoading(false)
-      swal('Oooops', 'Something went wrong', 'error')
+      /*Swal('Oooops', 'Something went wrong', 'error')*/
       console.log(err)
     })
   };
@@ -59,6 +64,10 @@ function Bookingscreen() {
   const roomUrl = `http://localhost:8080/api/rooms/${id}`;
 
   useEffect(() => {
+    if (!localStorage.getItem('currentuser')) {
+      window.location.href = '/login'
+    }
+
     fetch(roomUrl)
       .then((response) => {
         return response.json();
