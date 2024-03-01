@@ -28,4 +28,14 @@ router.post("/login", (req, res) => {
             return res.status(400).json({err})
         })
 })
+
+router.get('/getusers', (req, res) => {
+    User.find()
+    .then((users) => {
+        res.send(users)
+    })
+    .catch((err) => {
+        res.status(400).json({err})
+    })
+})
 module.exports = router

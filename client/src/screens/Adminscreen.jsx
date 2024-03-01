@@ -1,0 +1,195 @@
+import React from 'react'
+import { Tabs } from 'antd';
+import TabPane from 'antd/es/tabs/TabPane';
+import { useState, useEffect } from 'react'
+import Loader from '../components/loader'
+import Error from '../components/Error'
+
+function Adminscreen() {
+    return (
+        <div className='ml-3 mt-3 mr-3 bs'>
+            <h1 className='text-center'>Admin Panel</h1>
+            <Tabs defaultActiveKey="1">
+                <TabPane tab='Bookings' key='1'>
+                    <Bookings />
+                </TabPane>
+                <TabPane tab='Rooms' key='2'>
+                    <Rooms />
+                </TabPane>
+                <TabPane tab='Profile' key='3'>
+                    <h2>Add Room</h2>
+                </TabPane>
+                <TabPane tab='Profile' key='4'>
+                    <Users />
+                </TabPane>
+            </Tabs>
+        </div>
+
+    )
+}
+
+export default Adminscreen
+
+
+export function Bookings() {
+    const [bookings, setBookings] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(false)
+
+    useEffect(() => {
+        fetch('http://localhost:8080/api/getbookings')
+            .then((res) => {
+                return res.json()
+            })
+            .then((bookings) => {
+                setLoading(false)
+                setBookings(bookings)
+                //console.log(bookings)
+            })
+            .catch((err) => {
+                setLoading(false)
+                setError(true)
+            })
+    }, [])
+
+    return (
+        <div className='row'>
+            <div className='col-md-10'>
+                <h3>Bookings</h3>
+                {loading && <Loader />}
+                <table className='table table-bordered table-dark'>
+                    <thead className='bs'>
+                        <tr>
+                            <th>Booking Id</th>
+                            <th>User Id</th>
+                            <th>Room</th>
+                            <th>From</th>
+                            <th>To</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {bookings.length && (bookings.map((booking) => {
+                            return <tr>
+                                <td>{booking._id}</td>
+                                <td>{booking.userid}</td>
+                                <td>{booking.room}</td>
+                                <td>{booking.fromdate}</td>
+                                <td>{booking.todate}</td>
+                                <td>{booking.status}</td>
+                            </tr>
+                        }))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    )
+}
+
+
+export function Rooms() {
+    const [rooms, setRooms] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(false)
+
+    useEffect(() => {
+        fetch('http://localhost:8080/api/rooms')
+            .then((res) => {
+                return res.json()
+            })
+            .then((rooms) => {
+                setLoading(false)
+                setRooms(rooms)
+                //console.log(bookings)
+            })
+            .catch((err) => {
+                setLoading(false)
+                setError(true)
+            })
+    }, [])
+
+    return (
+        <div className='row'>
+            <div className='col-md-10'>
+                <h3>Rooms</h3>
+                {loading && <Loader />}
+                <table className='table table-bordered table-dark'>
+                    <thead className='bs'>
+                        <tr>
+                            <th>Room Id</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Rent Per Day</th>
+                            <th>Max Count</th>
+                            <th>Phone No</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {rooms.length && (rooms.map((room) => {
+                            return <tr>
+                                <td>{room._id}</td>
+                                <td>{room.name}</td>
+                                <td>{room.type}</td>
+                                <td>{room.rentperday}</td>
+                                <td>{room.maxcount}</td>
+                                <td>{room.phoneno}</td>
+                            </tr>
+                        }))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    )
+}
+
+
+export function Users() {
+    const [users, setUsers] = useState([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState(false)
+
+    useEffect(() => {
+        fetch('http://localhost:8080/api/getusers')
+            .then((res) => {
+                return res.json()
+            })
+            .then((rooms) => {
+                setLoading(false)
+                setUsers(rooms)
+                //console.log(bookings)
+            })
+            .catch((err) => {
+                setLoading(false)
+                setError(true)
+            })
+    }, [])
+
+    return (
+        <div className='row'>
+            <div className='col-md-10'>
+                <h3>Users</h3>
+                {loading && <Loader />}
+                <table className='table table-bordered table-dark'>
+                    <thead className='bs'>
+                        <tr>
+                            <th>User Id</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Is Admin</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {users.length && (users.map((room) => {
+                            return <tr>
+                                <td>{user._id}</td>
+                                <td>{user.name}</td>
+                                <td>{user.email}</td>
+                                <td>{user.isadmin === true ? 'Yes' : 'No'}</td>
+                            </tr>
+                        }))}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    )
+}

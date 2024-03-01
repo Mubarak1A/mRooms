@@ -98,4 +98,14 @@ router.post('/bookings/cancelbooking', (req, res) => {
         });
 });
 
+router.get('/getbookings', (req, res) => {
+    bookings.find()
+    .then((bookings) => {
+        res.send(bookings)
+    })
+    .catch((err) => {
+        res.status(400).json({err})
+    })
+})
+
 module.exports = router;
