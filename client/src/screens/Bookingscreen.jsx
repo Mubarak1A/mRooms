@@ -5,12 +5,13 @@ import Loader from "../components/loader";
 import Error from "../components/Error";
 import moment from "moment";
 import StripeCheckout from "react-stripe-checkout";
-import Swal from 'sweetalert2'
+import Success from '../components/Success';
 
 function Bookingscreen() {
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [success, setSucces] = useState(false)
   const { id, fromDate, toDate } = useParams();
   //const {totalDays, setTotalDays} = useState();
 
@@ -44,19 +45,14 @@ function Bookingscreen() {
     })
     .then((res) => {
       setLoading(false)
-      window.location.href='/home'
-      /*Swal({
-        title: "Good job!",
-        text: "You clicked the button!",
-        icon: "success"
-      })
-      .then((result) => {
+      setSucces(true)
+      setTimeout(() => {
         window.location.href='/home'
-      })*/
+      }, 200);
     })
     .catch((err) => {
       setLoading(false)
-      /*Swal('Oooops', 'Something went wrong', 'error')*/
+      setError(true)
       console.log(err)
     })
   };
@@ -91,7 +87,10 @@ function Bookingscreen() {
         {loading ? (
           <Loader />
         ) : rooms ? (
-          <div className="row bs">
+          <div>
+            {success && <Success message={"Room Booked Successfully!"} />}
+            {error && <Error message={"Ooops... Something Went wrong! Please try again."} />}
+            <div className="row bs">
             <div className="col-md-6">
               <h1>{rooms.name}</h1>
               <img src={rooms.imageurls[0]} className="big-img" />
@@ -128,6 +127,7 @@ function Bookingscreen() {
                 </StripeCheckout>
               </div>
             </div>
+          </div>
           </div>
         ) : (
           <Error message={"Ooops... Something Went wrong! Please try again."} />

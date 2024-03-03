@@ -3,7 +3,9 @@ import { Tabs } from 'antd';
 import TabPane from 'antd/es/tabs/TabPane';
 import { useState, useEffect } from 'react'
 import Loader from '../components/loader'
-import Error from '../components/Error'
+import Error from '../components/Error';
+import Success from '../components/Success'
+
 
 function Adminscreen() {
     return (
@@ -16,10 +18,10 @@ function Adminscreen() {
                 <TabPane tab='Rooms' key='2'>
                     <Rooms />
                 </TabPane>
-                <TabPane tab='Profile' key='3'>
-                    <h2>Add Room</h2>
+                <TabPane tab='Add Room' key='3'>
+                    <addRoom />
                 </TabPane>
-                <TabPane tab='Profile' key='4'>
+                <TabPane tab='Users' key='4'>
                     <Users />
                 </TabPane>
             </Tabs>
@@ -190,6 +192,73 @@ export function Users() {
                     </tbody>
                 </table>
             </div>
+        </div>
+    )
+}
+
+export function addRoom() {
+    const [name, setName] = useState();
+    const [maxcount, setMaxCount] = useState();
+    const [phonenumber, setPhoneNumber] = useState();
+    const [rentperday, setRentPerDay] = useState();
+    const [imageurls, setImageUrls] = useState([]);
+    const [currentbookings, setCurrentBookings] = useState();
+    const [type, setType] = useState();
+    const [description, setDescription] = useState();
+
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(false)
+    const [success, setSucces] = useState(false)
+
+    const handleSubmit = () => {
+        const roomDetails = {
+            name, maxcount, phonenumber, rentperday, description, imageurls, type, currentbookings
+        }
+
+        setLoading(true)
+        fetch('http://localhost:8080/api/addroom', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(roomDetails)
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    setLoading(false)
+                    throw new Error('Network response was not ok');
+                }
+                setLoading(false)
+                setSucces(true)
+                setTimeout(() => {
+                    window.location.reload();
+                }, 200);
+            })
+            .catch((err) => {
+                //console.log(err)
+                setLoading(false)
+                setError(true)
+            })
+    }
+
+    return (
+        <div className="row">
+            {error && <Error message={"Ooops... Something Went wrong! Please try again."} />}
+            {success && <Success message={"Room added Successfully!"} />}
+            <div className="col-md-6">
+                <input type="text" className='form-control' placeholder='Room Name' value={name} onChange={(e) => setName(e.target.value)} />
+                <input type="text" className='form-control' placeholder='Max Count' value={maxcount} onChange={(e) => setMaxCount(e.target.value)} />
+                <input type="text" className='form-control' placeholder='Phone Number' value={phonenumber} onChange={(e) => setPhoneNumber(e.target.value)} />
+                <input type="text" className='form-control' placeholder='Rent Per Day' value={rentperday} onChange={(e) => setRentPerDay(e.target.value)} />
+                <input type="text" className='form-control' placeholder='Decription' value={description} onChange={(e) => setDescription(e.target.value)} />
+            </div>
+            <div className="col-md-6">
+                <input type="text" className='form-control' placeholder='Image Url 2' value={imageurls[0]} onChange={(e) => setImageUrls(imageurls.push(e.target.value))} />
+                <input type="text" className='form-control' placeholder='Image Url 3' value={imageurls[1]} onChange={(e) => setImageUrls(imageurls.push(e.target.value))} />
+                <input type="text" className='form-control' placeholder='Image Url 1' value={imageurls[2]} onChange={(e) => setImageUrls(imageurls.push(e.target.value))} />
+                <input type="text" className='form-control' placeholder='Type' value={type} onChange={(e) => setType(e.target.value)} />
+            </div>
+
+            <button className='btn btn-primary' onClick={handleSubmit}>Add Room</button>
+            {loading && <Loader />}
         </div>
     )
 }
