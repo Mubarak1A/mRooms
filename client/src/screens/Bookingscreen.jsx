@@ -48,7 +48,7 @@ function Bookingscreen() {
       setSucces(true)
       setTimeout(() => {
         window.location.href='/home'
-      }, 200);
+      }, 400);
     })
     .catch((err) => {
       setLoading(false)
