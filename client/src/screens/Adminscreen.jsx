@@ -46,7 +46,7 @@ export function Bookings() {
     const [error, setError] = useState(false)
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/getbookings')
+        fetch('https://mrooms.onrender.com/api/getbookings')
             .then((res) => {
                 return res.json()
             })
@@ -102,7 +102,7 @@ export function Rooms() {
     const [error, setError] = useState(false)
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/rooms')
+        fetch('https://mrooms.onrender.com/api/rooms')
             .then((res) => {
                 return res.json()
             })
@@ -158,7 +158,7 @@ export function Users() {
     const [error, setError] = useState(false)
 
     useEffect(() => {
-        fetch('http://localhost:8080/api/getusers')
+        fetch('https://mrooms.onrender.com/api/getusers')
             .then((res) => {
                 return res.json()
             })
@@ -231,7 +231,7 @@ export function AddRoom() {
           
         //console.log(roomDetails)
         setLoading(true)
-        fetch('http://localhost:8080/api/addroom', {
+        fetch('https://mrooms.onrender.com/api/addroom', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(roomDetails)
