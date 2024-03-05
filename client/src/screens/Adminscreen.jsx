@@ -8,6 +8,13 @@ import Success from '../components/Success'
 
 
 function Adminscreen() {
+
+    useEffect(() => {
+        if(!JSON.parse(localStorage.getItem('currentuser')).isadmin){
+            window.location.href ='/home'
+        }
+    })
+
     return (
         <div className='ml-3 mt-3 mr-3 bs'>
             <h1 className='text-center'>Admin Panel</h1>
@@ -19,7 +26,7 @@ function Adminscreen() {
                     <Rooms />
                 </TabPane>
                 <TabPane tab='Add Room' key='3'>
-                    <addRoom />
+                    <AddRoom />
                 </TabPane>
                 <TabPane tab='Users' key='4'>
                     <Users />
@@ -181,7 +188,7 @@ export function Users() {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.length && (users.map((room) => {
+                        {users.length && (users.map((user) => {
                             return <tr>
                                 <td>{user._id}</td>
                                 <td>{user.name}</td>
@@ -196,13 +203,14 @@ export function Users() {
     )
 }
 
-export function addRoom() {
+export function AddRoom() {
     const [name, setName] = useState();
     const [maxcount, setMaxCount] = useState();
     const [phonenumber, setPhoneNumber] = useState();
     const [rentperday, setRentPerDay] = useState();
-    const [imageurls, setImageUrls] = useState([]);
-    const [currentbookings, setCurrentBookings] = useState();
+    const [imageurl1, setImageUrl1] = useState();
+    const [imageurl2, setImageUrl2] = useState();
+    const [imageurl3, setImageUrl3] = useState();
     const [type, setType] = useState();
     const [description, setDescription] = useState();
 
@@ -212,9 +220,16 @@ export function addRoom() {
 
     const handleSubmit = () => {
         const roomDetails = {
-            name, maxcount, phonenumber, rentperday, description, imageurls, type, currentbookings
-        }
-
+            name,
+            maxcount,
+            phonenumber,
+            rentperday,
+            description,
+            imageurls: [imageurl1, imageurl2, imageurl3],
+            type,
+          };
+          
+        //console.log(roomDetails)
         setLoading(true)
         fetch('http://localhost:8080/api/addroom', {
             method: 'POST',
@@ -230,7 +245,7 @@ export function addRoom() {
                 setSucces(true)
                 setTimeout(() => {
                     window.location.reload();
-                }, 200);
+                }, 400);
             })
             .catch((err) => {
                 //console.log(err)
@@ -244,17 +259,17 @@ export function addRoom() {
             {error && <Error message={"Ooops... Something Went wrong! Please try again."} />}
             {success && <Success message={"Room added Successfully!"} />}
             <div className="col-md-6">
-                <input type="text" className='form-control' placeholder='Room Name' value={name} onChange={(e) => setName(e.target.value)} />
-                <input type="text" className='form-control' placeholder='Max Count' value={maxcount} onChange={(e) => setMaxCount(e.target.value)} />
-                <input type="text" className='form-control' placeholder='Phone Number' value={phonenumber} onChange={(e) => setPhoneNumber(e.target.value)} />
-                <input type="text" className='form-control' placeholder='Rent Per Day' value={rentperday} onChange={(e) => setRentPerDay(e.target.value)} />
-                <input type="text" className='form-control' placeholder='Decription' value={description} onChange={(e) => setDescription(e.target.value)} />
+                <input type="text" className='form-control' placeholder='Room Name' value={name} onChange={(e) => setName(e.target.value)} /><br />
+                <input type="text" className='form-control' placeholder='Max Count' value={maxcount} onChange={(e) => setMaxCount(e.target.value)} /><br />
+                <input type="text" className='form-control' placeholder='Phone Number' value={phonenumber} onChange={(e) => setPhoneNumber(e.target.value)} /><br />
+                <input type="text" className='form-control' placeholder='Rent Per Day' value={rentperday} onChange={(e) => setRentPerDay(e.target.value)} /><br />
+                <input type="text" className='form-control' placeholder='Decription' value={description} onChange={(e) => setDescription(e.target.value)} /><br />
             </div>
             <div className="col-md-6">
-                <input type="text" className='form-control' placeholder='Image Url 2' value={imageurls[0]} onChange={(e) => setImageUrls(imageurls.push(e.target.value))} />
-                <input type="text" className='form-control' placeholder='Image Url 3' value={imageurls[1]} onChange={(e) => setImageUrls(imageurls.push(e.target.value))} />
-                <input type="text" className='form-control' placeholder='Image Url 1' value={imageurls[2]} onChange={(e) => setImageUrls(imageurls.push(e.target.value))} />
-                <input type="text" className='form-control' placeholder='Type' value={type} onChange={(e) => setType(e.target.value)} />
+                <input type="text" className='form-control' placeholder='Image Url 1' value={imageurl1} onChange={(e) => setImageUrl1(e.target.value)} /><br />
+                <input type="text" className='form-control' placeholder='Image Url 2' value={imageurl2} onChange={(e) => setImageUrl2(e.target.value)} /><br />
+                <input type="text" className='form-control' placeholder='Image Url 3' value={imageurl3} onChange={(e) => setImageUrl3(e.target.value)} /><br />
+                <input type="text" className='form-control' placeholder='Type' value={type} onChange={(e) => setType(e.target.value)} /><br />
             </div>
 
             <button className='btn btn-primary' onClick={handleSubmit}>Add Room</button>
