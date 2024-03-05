@@ -18,7 +18,7 @@ export default function Registerscreen() {
         if(password === cpassword) {
             const user = { name, email, password }
             
-            const url = "http://localhost:8080/api/register"
+            const url = "https://mrooms.onrender.com/api/register"
             setLoading(true)
             fetch(url, {
                 method: 'POST',
