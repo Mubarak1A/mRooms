@@ -112,8 +112,8 @@ function Bookingscreen() {
                 <hr />
                 <b>
                   <p>Total days : {dateDifference} </p>
-                  <p>Rent per day : {rooms.rentperday}</p>
-                  <p>Total Amount : {totalAmount} </p>
+                  <p>Rent per day : ${rooms.rentperday}</p>
+                  <p>Total Amount : ${totalAmount} </p>
                 </b>
               </div>
               <div style={{ float: "right" }}>
