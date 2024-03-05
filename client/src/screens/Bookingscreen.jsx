@@ -37,7 +37,7 @@ function Bookingscreen() {
     };
 
     setLoading(true)
-    const bookingUrl = "http://localhost:8080/api/bookroom";
+    const bookingUrl = "https://mrooms.onrender.com/api/bookroom";
     fetch(bookingUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -57,7 +57,7 @@ function Bookingscreen() {
     })
   };
 
-  const roomUrl = `http://localhost:8080/api/rooms/${id}`;
+  const roomUrl = `https://mrooms.onrender.com/api/rooms/${id}`;
 
   useEffect(() => {
     if (!localStorage.getItem('currentuser')) {
