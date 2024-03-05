@@ -3,6 +3,8 @@ const Room = require('../models/roomModels')
 
 const router = express.Router();
 
+router.use(express.json());
+
 router.get('/rooms', (req, res) => {
     const rooms = Room.find()
         .then((results) => {
@@ -21,15 +23,24 @@ router.get('/rooms/:id', (req, res) => {
 })
 
 router.post('/addroom', (req, res) => {
-    const newRoom = new Room(req.body)
-
+    const newRoom = new Room(req.body);
+  
+    // Synchronous validation
+    const validationError = newRoom.validateSync();
+  
+    if (validationError) {
+      return res.status(400).json({ err: validationError });
+    }
+  
+    // Save the room
     newRoom.save()
-    .then((res) => {
-        res.send('Room Added Successfully')
-    })
-    .catch((err) => {
-        return res.status(400).json({err})
-    })
-})
+      .then((savedRoom) => {
+        res.status(201).send('Room Added Successfully');
+      })
+      .catch((err) => {
+        res.status(400).json({ err });
+      });
+  });
+  
 
 module.exports = router
