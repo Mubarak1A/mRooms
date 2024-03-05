@@ -70,8 +70,9 @@ h1{
     border: solid blue 2px;
 }
 
-.search {
+input {
     width: 40%;
+    margin: 5px !important;
 }
 
 .profile-container {
@@ -81,7 +82,7 @@ h1{
 
 .landing {
     background-color: blue !important;
-    height: 90vh;
+    height: 100vh;
     display: flex;
     flex-direction: row;
     align-items: center;

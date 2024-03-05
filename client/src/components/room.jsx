@@ -14,7 +14,7 @@ const Room = ({room, fromDate, toDate}) => {
                 <div className="col-md-4">
                     <img src={room.imageurls[0]} className="small-img"></img>
                 </div>
-                <div className="col-md-7">
+                <div className="col-md-7 mt-5">
                     <h1>{room.name}</h1>
                     <p><b>Max Count:</b> {room.maxcount}</p>
                     <p><b>Phone Number</b>: {room.phonenumber}</p>
