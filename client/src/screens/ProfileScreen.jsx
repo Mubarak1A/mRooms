@@ -43,7 +43,7 @@ export function Bookings() {
     
     useEffect(() => {
         setLoading(true)
-        fetch("http://localhost:8080/api/getbookingsbyid", {
+        fetch("https://mrooms.onrender.com/api/getbookingsbyid", {
             method: "POST",
             headers: {"Content-Type" : "application/json"},
             body : JSON.stringify({userid : user._id})
@@ -70,7 +70,7 @@ export function Bookings() {
 
     const cancelBooking = (bookingid, roomid) => {
         setLoading(true)
-        fetch('http://localhost:8080/api/bookings/cancelbooking', {
+        fetch('https://mrooms.onrender.com/api/bookings/cancelbooking', {
             method : 'POST',
             headers : {'Content-Type' : 'application/json'},
             body : JSON.stringify({bookingid, roomid})
