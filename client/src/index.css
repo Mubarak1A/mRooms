@@ -78,3 +78,18 @@ h1{
     max-width: 450px;
     margin-right: 20px;
 }
+
+.landing {
+    background-color: blue !important;
+    height: 90vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.landing .col-md-9 {
+    border-right: 5px solid white !important;
+}
+
