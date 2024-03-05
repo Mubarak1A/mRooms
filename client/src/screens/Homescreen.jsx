@@ -19,7 +19,7 @@ function Homescreen() {
   const [searchKey, setSearchKey] = useState("")
   const [type, setType] = useState("")
 
-  const url = 'http://localhost:8080/api/rooms'
+  const url = 'https://mrooms.onrender.com/api/rooms'
   useEffect(() => {
     fetch(url)
       .then((response) => {
