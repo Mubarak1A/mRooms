@@ -1,4 +1,4 @@
-# mRooms - MERN Stack Project
+# mRooms
 
 mRooms is a full-stack MERN (MongoDB, Express.js, React, Node.js) project that provides a simple and customizable room management system. This repository includes both the client and server components for a seamless development experience.
 
