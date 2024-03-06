@@ -82,7 +82,7 @@ function Homescreen() {
 
   return (
     <div className='container'>
-      <div className="row mt-5 bs search-container">
+      <div className="row mt-5 bs search-container" style={{backgroundColor:'white'}}>
         <div className="col-md-3">
           <RangePicker format='DD-MM-YYYY' onChange={filterByDate} className='filter' />
         </div>
@@ -103,7 +103,7 @@ function Homescreen() {
 
       </div>
 
-      <div className='row justify-content-center mt-5'>
+      <div className='row justify-content-center mt-5' style={{backgroundColor:'white'}}>
         {loading ? (
           <Loader />
         ) : (
