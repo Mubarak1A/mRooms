@@ -63,9 +63,9 @@ h1{
     width: 100%;
 }
 
-.auth-box{
+/*.auth-box{
     max-width: 60%;
-}
+}*/
 
 .filter {
     border: solid blue 2px;
@@ -90,8 +90,8 @@ input {
     width: 100%;
 }
 
-.landing .container {
-    width: 85%;
+.landing .container, .container {
+    width: 90%;
     margin: auto;
     border-right: solid white 4px;
 }

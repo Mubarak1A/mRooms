@@ -48,10 +48,10 @@ export default function Registerscreen() {
   return (
     <div>
         <div className='row justify-content-center mt-5'>
-            <div className='col-md-5 auth-box'>
+            <div className='container'>
                 {error && <Error message={"Ooops... Something Went wrong! Please try again."}/>}
                 {success && <Success message={"Registration Successful!"}/>}
-                <div className='bs text-center'>
+                <div className='bs text-center container'>
                     <h1>Register</h1>
                     <input type='text' className='form-control' id='name' placeholder='Full Name' value={name} onChange={(e) => setName(e.target.value)}/><br />
                     <input type='email' className='form-control' id='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/><br />

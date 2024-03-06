@@ -44,10 +44,10 @@ export default function Loginscreen() {
 
   return (
     <div>
-        <div className='row justify-content-center mt-5'>
-            <div className='col-md-5 auth-box'>
+        <div className='justify-content-center mt-5'>
+            <div className='container'>
                 {error && <Error message={"Invalid Credentials"}/>}
-                <div className='bs text-center'>
+                <div className='bs text-center container'>
                     <h1>Login</h1>
                     <input type='email' className='form-control' id='email' placeholder='Email' value={email} onChange={(e) => setEmail(e.target.value)}/><br />
                     <input type='password' className='form-control' id='password' placeholder='Password' value={password} onChange={(e) => setPassword(e.target.value)}/><br />
