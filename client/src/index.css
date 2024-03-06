@@ -9,6 +9,7 @@ body{
 
 .navbar {
     padding: 10px 20px;
+    margin: 0px !important;
     background-color: blue !important;
 }
 
@@ -83,14 +84,23 @@ input {
 .landing {
     background-color: blue !important;
     height: 100vh;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
+    color: white;
+    padding-top: 200px;
     text-align: center;
+    width: 100%;
 }
 
-.landing .col-md-9 {
+.landing .container {
+    width: 90%;
+    margin: auto;
+    border-right: solid white 4px;
+}
+
+.landing h2{
+    font-size: 72px;
+}
+
+.landing .col-md-12 {
     border-right: 5px solid white !important;
 }
 
